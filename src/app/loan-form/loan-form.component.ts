@@ -88,6 +88,7 @@ export class LoanFormComponent implements OnInit {
         console.log(this.response);
       },
       error: err => {
+        this.calculated = false;
         console.log(err);
         this.fields = err;
       }
@@ -96,7 +97,6 @@ export class LoanFormComponent implements OnInit {
   }
 
   calculation(num: number): string {
-    if(String(num).length <= 5 ) return String(num*1000);
-    return String(num / 1000);
+    return String(num);
   }
 }
