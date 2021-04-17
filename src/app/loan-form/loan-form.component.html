@@ -9,6 +9,11 @@
                 <div *ngIf="getControl.monthlyIncome.errors.required">Monthly Income is required.</div>
                 <div *ngIf="getControl.monthlyIncome.errors?.minlength">Minimum 4 character are required.</div>
             </div>
+            <span *ngFor="let field of fields">
+                <span *ngIf="field.params === 'monthlyIncome'">
+                    <span style="color:red">{{field.message}}</span>
+                </span>
+            </span>
         </div>
 
         <div class="form-group">
@@ -17,8 +22,12 @@
                 placeholder="Enter amount in euro">
             <div *ngIf="getControl.requestedAmount.touched && getControl.requestedAmount.invalid" class="text-danger">
                 <div *ngIf="getControl.requestedAmount.errors.required">Requested Amount is required.</div>
-                <div *ngIf="getControl.requestedAmount.errors?.minlength">Minimum 4 character are required.</div>
             </div>
+            <span *ngFor="let field of fields">
+                <span *ngIf="field.params === 'requestedAmount'">
+                    <span style="color:red">{{field.message}}</span>
+                </span>
+            </span>
         </div>
 
         <div class="form-group">
@@ -28,6 +37,11 @@
                 <div *ngIf="getControl.loanTerm.errors.required">Loan Term is required.</div>
                 <div *ngIf="getControl.loanTerm.errors?.minlength">Minimum 4 character are required.</div>
             </div>
+            <span *ngFor="let field of fields">
+                <span *ngIf="field.params === 'loanTerm'">
+                    <span style="color:red">{{field.message}}</span>
+                </span>
+            </span>
         </div>
 
         <div class="form-group">
@@ -41,7 +55,7 @@
 
         <div class="form-group">
             <label>CoApplicant</label>
-            <select class="custom-select" formControlName="coapplicant" (change)="changeLoaner($event)">
+            <select class="custom-select" formControlName="coapplicant" (change)="changeCOApplicant($event)">
                 <option *ngFor="let loaner of loaners">
                     {{loaner}}
                 </option>
@@ -59,6 +73,7 @@
         <p>You can loan: {{response.loanAmount}}</p>
     </div>
 
+    <!--
     <div style="margin-top: 30px;" class="form-group" *ngIf="this.fields.length > 0 && !calculated">
         <h2>Error Input</h2>
 
@@ -68,6 +83,7 @@
             </li>
         </ul>
     </div>
+    -->
 
 </div>
 
