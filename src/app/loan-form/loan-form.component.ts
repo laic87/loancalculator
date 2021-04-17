@@ -3,9 +3,6 @@ import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms"
 import { ILoanPayload } from '../loanPayload';
 import { ApiService } from '../services/api.service';
 
-import { Children } from "../children";
-import { COAppliant } from "../coapplicant";
-
 @Component({
   selector: 'app-loan-form',
   templateUrl: './loan-form.component.html',
@@ -20,6 +17,7 @@ export class LoanFormComponent implements OnInit {
     interestRate: 0,
     loanAmount: 0
   };
+
   fields = [];
 
   errorMessage: {};
@@ -41,8 +39,8 @@ export class LoanFormComponent implements OnInit {
       monthlyIncome: ["", [Validators.required, Validators.minLength(400)]],
       requestedAmount: ["", [Validators.required, Validators.minLength(500)]],
       loanTerm: ["", [Validators.required, Validators.minLength(500)]],
-      children: new FormControl("NONE"),
-      coapplicant: new FormControl("NONE")
+      children: new FormControl(this.childrens[0]),
+      coapplicant: new FormControl(this.loaners[0])
     })
   }
 
@@ -65,7 +63,7 @@ export class LoanFormComponent implements OnInit {
     return this.loanForm.get('coapplicant');
   }
 
-  changeLoaner(event: any) {
+  changeCOApplicant(event: any) {
     this.COApplicant.setValue(event.target.value, {
       onlySelf: true
     })
@@ -75,29 +73,30 @@ export class LoanFormComponent implements OnInit {
 
     // <try to get whole interface object rather than this
     this.payload =  {
-      monthlyIncome: Number(this.loanForm.controls.monthlyIncome.value),
-      requestedAmount: Number(this.loanForm.controls.requestedAmount.value),
+      monthlyIncome: Number(this.calculation(this.loanForm.controls.monthlyIncome.value)),
+      requestedAmount: Number(this.calculation(this.loanForm.controls.requestedAmount.value)),
       loanTerm: Number(this.loanForm.controls.loanTerm.value),
       children: String(this.loanForm.controls.children.value),
       coapplicant: String(this.loanForm.controls.coapplicant.value)
     };
 
+    
     this.apiService.requestLoan(this.payload).subscribe({
       next: data => {
         this.response = data;
         this.calculated = true;
         console.log(this.response);
       },
-      error: error => {
-        console.log("===");
-        console.log(error);
-        console.log(error.status);
-        console.log("===");
-        this.errorMessage = error;
-        this.response = error.fields;
-        this.fields = error.error.fields;
-        console.log(this.fields);
+      error: err => {
+        console.log(err);
+        this.fields = err;
       }
     });
+
+  }
+
+  calculation(num: number): string {
+    if(String(num).length <= 5 ) return String(num*1000);
+    return String(num / 1000);
   }
 }
