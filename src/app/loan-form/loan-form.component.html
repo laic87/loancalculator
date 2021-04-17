@@ -1,0 +1,78 @@
+<div>
+
+    <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label>Montly Income *</label>
+            <input class="form-control" type="number" formControlName="monthlyIncome"
+                placeholder="Enter amount in euro">
+            <div *ngIf="getControl.monthlyIncome.touched && getControl.monthlyIncome.invalid" class="text-danger">
+                <div *ngIf="getControl.monthlyIncome.errors.required">Monthly Income is required.</div>
+                <div *ngIf="getControl.monthlyIncome.errors?.minlength">Minimum 4 character are required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Requested Amount *</label>
+            <input class="form-control" type="number" formControlName="requestedAmount"
+                placeholder="Enter amount in euro">
+            <div *ngIf="getControl.requestedAmount.touched && getControl.requestedAmount.invalid" class="text-danger">
+                <div *ngIf="getControl.requestedAmount.errors.required">Requested Amount is required.</div>
+                <div *ngIf="getControl.requestedAmount.errors?.minlength">Minimum 4 character are required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Loan Term *</label>
+            <input class="form-control" type="number" formControlName="loanTerm" placeholder="Enter in months">
+            <div *ngIf="getControl.loanTerm.touched && getControl.loanTerm.invalid" class="text-danger">
+                <div *ngIf="getControl.loanTerm.errors.required">Loan Term is required.</div>
+                <div *ngIf="getControl.loanTerm.errors?.minlength">Minimum 4 character are required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Children</label>
+            <select class="custom-select" formControlName="children" (change)="changeChildren($event)">
+                <option *ngFor="let child of childrens">
+                    {{child}}
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>CoApplicant</label>
+            <select class="custom-select" formControlName="coapplicant" (change)="changeLoaner($event)">
+                <option *ngFor="let loaner of loaners">
+                    {{loaner}}
+                </option>
+            </select>
+        </div>
+
+        <button class="btn btn-danger btn-block" [disabled]="!loanForm.valid" type="submit">Submit</button>
+    </form>
+
+
+    <div style="margin-top: 30px;" class="form-group" *ngIf="this.response && calculated">
+        <h2>Calculated Loan</h2>
+        <p>Response from backend</p>
+        <p>Your interest rate: {{response.interestRate}}</p>
+        <p>You can loan: {{response.loanAmount}}</p>
+    </div>
+
+    <div style="margin-top: 30px;" class="form-group" *ngIf="this.fields.length > 0 && !calculated">
+        <h2>Error Input</h2>
+
+        <ul>
+            <li *ngFor="let field of fields">
+                {{field.message}}
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+
+
+<!-- 500000 -->
+<!-- 20000000 -->
