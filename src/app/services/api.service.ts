@@ -27,16 +27,16 @@ export class ApiService {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
     let errorMessage: string;
-    if(err.status ===  400) {
-      return throwError(err.error.fields);
-    } 
     if (err.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       errorMessage = `An error occurred: ${err.error.message}`;
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
+      //errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
+      if(err.status ===  400) {
+        return throwError(err.error.fields);
+      } 
     }
     console.error(err);
     return throwError(errorMessage);
