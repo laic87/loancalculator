@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { LoanFormComponent } from './loan-form.component';
 
@@ -8,6 +10,7 @@ describe('FormLoanComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [ ReactiveFormsModule, FormsModule, HttpClientTestingModule ],
       declarations: [ LoanFormComponent ]
     })
     .compileComponents();
