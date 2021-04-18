@@ -36,7 +36,7 @@ export class ApiService {
       //errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
       if(err.status ===  400) {
         return throwError(err.error.fields);
-      } 
+      }
     }
     console.error(err);
     return throwError(errorMessage);

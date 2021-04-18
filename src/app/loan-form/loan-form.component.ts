@@ -3,6 +3,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms"
 import { ILoanPayload } from '../loanPayload';
 import { ApiService } from '../services/api.service';
 
+import { multiplyAmount } from "../shared/utility";
+
 @Component({
   selector: 'app-loan-form',
   templateUrl: './loan-form.component.html',
@@ -73,8 +75,8 @@ export class LoanFormComponent implements OnInit {
 
     // <try to get whole interface object rather than this
     this.payload =  {
-      monthlyIncome: Number(this.calculation(this.loanForm.controls.monthlyIncome.value)),
-      requestedAmount: Number(this.calculation(this.loanForm.controls.requestedAmount.value)),
+      monthlyIncome: multiplyAmount(this.loanForm.controls.monthlyIncome.value),
+      requestedAmount: multiplyAmount(this.loanForm.controls.requestedAmount.value),
       loanTerm: Number(this.loanForm.controls.loanTerm.value),
       children: String(this.loanForm.controls.children.value),
       coapplicant: String(this.loanForm.controls.coapplicant.value)
@@ -86,6 +88,7 @@ export class LoanFormComponent implements OnInit {
         this.response = data;
         this.calculated = true;
         console.log(this.response);
+        this.fields = [];
       },
       error: err => {
         this.calculated = false;
@@ -94,9 +97,5 @@ export class LoanFormComponent implements OnInit {
       }
     });
 
-  }
-
-  calculation(num: number): string {
-    return String(num);
   }
 }

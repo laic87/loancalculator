@@ -25,4 +25,23 @@ describe('FormLoanComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('test child field default value',() => {
+    expect(component.children.value).toBe("NONE");
+  })
+
+  it('test coapplicant default value',() => {
+    expect(component.COApplicant.value).toBe("NONE");
+  })
+
+  it('should render input elements', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    const monthlyIncome = compiled.querySelector('input[formControlName="monthlyIncome"]');
+    const requestedAmount = compiled.querySelector('input[formControlName="requestedAmount"]');
+    const loanTerm = compiled.querySelector('input[formControlName="loanTerm"]');
+    expect(monthlyIncome).toBeTruthy();
+    expect(requestedAmount).toBeTruthy();
+    expect(loanTerm).toBeTruthy();
+  });
+  
 });
