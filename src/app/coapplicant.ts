@@ -1,5 +1,0 @@
-export enum COAppliant {
-    NONE = "NONE",  
-    SINGLE_BORROWER = "SINGLE_BORROWER",
-    MULTIPLE_BORROWERS = "MULTIPLE_BORROWERS"
-};
