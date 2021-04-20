@@ -22,17 +22,13 @@ export class LoanFormComponent implements OnInit {
 
   numberRegEx = /\-?\d*\.?\d{1,2}/;
 
-  reg = /^\d+$/;
-
   response = {
     interestRate: 0,
     loanAmount: 0
   };
 
   fields = [];
-
   dialogValue: string;
-
   errorMessage: {};
   payload: ILoanPayload;
 

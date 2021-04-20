@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoanDialogComponent } from './loan-dialog.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('LoanDialogComponent', () => {
   let component: LoanDialogComponent;
@@ -11,7 +10,7 @@ describe('LoanDialogComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ LoanDialogComponent ],
       imports: [ MatDialogModule ],
-      providers: [ MatDialogRef ]
+      providers: [ MatDialogRef, MAT_DIALOG_DATA ]
     })
     .compileComponents();
   });
@@ -21,12 +20,11 @@ describe('LoanDialogComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
   
   /*
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
   */
+
 });

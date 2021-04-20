@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoanFormComponent } from './loan-form/loan-form.component';
 import { MaterialModule } from './shared/material.module';
@@ -21,7 +21,11 @@ import { LoanDialogComponent } from './loan-dialog/loan-dialog.component';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    FormsModule,
     MaterialModule
+  ],
+  entryComponents: [
+    LoanDialogComponent,
   ],
   providers: [],
   bootstrap: [ AppComponent ]

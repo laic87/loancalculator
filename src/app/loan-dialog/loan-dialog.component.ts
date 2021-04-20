@@ -11,7 +11,6 @@ export class LoanDialogComponent implements OnInit {
   interestRate: number;
   loanAmount: number;
   fields: [];
-  calculated = false;
   fromDialog: string;
 
   constructor(
@@ -20,7 +19,6 @@ export class LoanDialogComponent implements OnInit {
   ) {
     this.interestRate = data.response.interestRate;
     this.loanAmount = data.response.loanAmount;
-    this.calculated = data.calculated;
     this.fields = data.fields;
 
    }
@@ -31,5 +29,4 @@ export class LoanDialogComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close({ event: 'close', data: this.fromDialog });
   }
-
 }
