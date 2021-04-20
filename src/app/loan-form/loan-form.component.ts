@@ -22,6 +22,8 @@ export class LoanFormComponent implements OnInit {
 
   numberRegEx = /\-?\d*\.?\d{1,2}/;
 
+  reg = /^\d+$/;
+
   response = {
     interestRate: 0,
     loanAmount: 0
@@ -45,12 +47,24 @@ export class LoanFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.loanForm = this.formBuilder.group({
-      monthlyIncome: ["", [Validators.required, Validators.minLength(500)]],
-      requestedAmount: ["", [Validators.required, Validators.minLength(500)]],
-      loanTerm: ["", [Validators.required, Validators.minLength(500)]],
+      monthlyIncome: ["", [Validators.required, Validators.pattern(this.numberRegEx)]],
+      requestedAmount: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
+      loanTerm: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
       children: new FormControl(this.childrens[0]),
       coapplicant: new FormControl(this.loaners[0])
     })
+  }
+
+  get monthlyIncome() {
+    return this.loanForm.get('monthlyIncome');
+  }
+
+  get requestedAmount() {
+    return this.loanForm.get('requestedAmount');
+  }
+
+  get loanTerm() {
+    return this.loanForm.get('loanTerm');
   }
 
   get getControl() {

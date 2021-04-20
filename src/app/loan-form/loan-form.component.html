@@ -6,13 +6,11 @@
             <mat-label>Monthly Income</mat-label>
             <input matInput type="number" placeholder="Enter amount in euro" formControlName="monthlyIncome">
             <mat-icon matSuffix>euro_symbol</mat-icon>
-            <!--            <span *ngIf="loanForm.controls['monthlyIncome'].errors.pattern">
+            <span *ngIf="monthlyIncome.errors?.pattern" class="text-danger">
                 <mat-error>
-                    Only Numbers are allowed.  
+                    Number Only
                 </mat-error>
             </span>
-            -->
-
             <span *ngFor="let field of fields">
                 <span *ngIf="field.params === 'monthlyIncome'">
                     <mat-error>
@@ -26,6 +24,11 @@
             <mat-label>Requested Amount</mat-label>
             <input matInput type="number" placeholder="Enter amount in euro" formControlName="requestedAmount">
             <mat-icon matSuffix>euro_symbol</mat-icon>
+            <span *ngIf="requestedAmount.errors?.pattern" class="text-danger">
+                <mat-error>
+                    Number Only
+                </mat-error>
+            </span>
             <span *ngFor="let field of fields">
                 <span *ngIf="field.params === 'requestedAmount'">
                     <mat-error>
@@ -39,6 +42,11 @@
             <mat-label>Loan Term</mat-label>
             <input matInput type="number" formControlName="loanTerm" placeholder="Enter number of months">
             <mat-icon matSuffix>date_range</mat-icon>
+            <span *ngIf="loanTerm.errors?.pattern" class="text-danger">
+                <mat-error>
+                    Number Only
+                </mat-error>
+            </span>
             <span *ngFor="let field of fields">
                 <span *ngIf="field.params === 'loanTerm'">
                     <mat-error>
