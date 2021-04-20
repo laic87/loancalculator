@@ -2,19 +2,25 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private http: HttpClient) { }
+  apiKey: string;
+
+  constructor(private http: HttpClient) { 
+    this.apiKey = environment.API_KEY;
+  }
 
   requestLoan(payload: object): Observable<any> {
 
+
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
-      "x-api-key": "swb-222222"
+      "x-api-key": this.apiKey
     })
 
     return this.http.post<any>("/api", payload, { headers: headers })
@@ -24,8 +30,6 @@ export class ApiService {
   }
 
   private handleError(err: any): Observable<never> {
-    // in a real world app, we may send the server to some remote logging infrastructure
-    // instead of just logging it to the console
     let errorMessage: string;
     if (err.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

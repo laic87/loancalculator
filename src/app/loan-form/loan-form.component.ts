@@ -3,18 +3,25 @@ import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms"
 import { ILoanPayload } from '../loanPayload';
 import { ApiService } from '../services/api.service';
 
-import { multiplyAmount } from "../shared/utility";
+import { MatDialog } from '@angular/material/dialog';
+
+import { parseAmount } from "../shared/utility";
+
+import { LoanDialogComponent } from "../loan-dialog/loan-dialog.component";
 
 @Component({
   selector: 'app-loan-form',
   templateUrl: './loan-form.component.html',
-  styleUrls: ['./loan-form.component.css']
+  styleUrls: ['./loan-form.component.css'],
 })
 export class LoanFormComponent implements OnInit {
 
   loanForm: FormGroup;
 
   calculated = false;
+
+  numberRegEx = /\-?\d*\.?\d{1,2}/;
+
   response = {
     interestRate: 0,
     loanAmount: 0
@@ -22,23 +29,23 @@ export class LoanFormComponent implements OnInit {
 
   fields = [];
 
+  dialogValue: string;
+
   errorMessage: {};
   payload: ILoanPayload;
 
-  // Create ENUM for these rather than declaring here
   childrens = ["NONE", "SINGLE", "MULTIPLE"];
   loaners = ["NONE", "SINGLE_BORROWER", "MULTIPLE_BORROWERS"];
 
   constructor(
-      private formBuilder: FormBuilder,
-      private apiService: ApiService
-    ) {}
+    private formBuilder: FormBuilder,
+    private apiService: ApiService,
+    public dialog: MatDialog
+  ) { }
 
-
-    // <use declared enum for default value instaed of hard code
   ngOnInit(): void {
     this.loanForm = this.formBuilder.group({
-      monthlyIncome: ["", [Validators.required, Validators.minLength(400)]],
+      monthlyIncome: ["", [Validators.required, Validators.minLength(500)]],
       requestedAmount: ["", [Validators.required, Validators.minLength(500)]],
       loanTerm: ["", [Validators.required, Validators.minLength(500)]],
       children: new FormControl(this.childrens[0]),
@@ -73,22 +80,21 @@ export class LoanFormComponent implements OnInit {
 
   onSubmit(): void {
 
-    // <try to get whole interface object rather than this
-    this.payload =  {
-      monthlyIncome: multiplyAmount(this.loanForm.controls.monthlyIncome.value),
-      requestedAmount: multiplyAmount(this.loanForm.controls.requestedAmount.value),
+    this.payload = {
+      monthlyIncome: parseAmount(this.loanForm.controls.monthlyIncome.value),
+      requestedAmount: parseAmount(this.loanForm.controls.requestedAmount.value),
       loanTerm: Number(this.loanForm.controls.loanTerm.value),
       children: String(this.loanForm.controls.children.value),
       coapplicant: String(this.loanForm.controls.coapplicant.value)
     };
 
-    
     this.apiService.requestLoan(this.payload).subscribe({
       next: data => {
         this.response = data;
         this.calculated = true;
         console.log(this.response);
         this.fields = [];
+        this.openDialog();
       },
       error: err => {
         this.calculated = false;
@@ -96,6 +102,40 @@ export class LoanFormComponent implements OnInit {
         this.fields = err;
       }
     });
-
   }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(LoanDialogComponent, {
+      width: "450px",
+      disableClose: true,
+      backdropClass: 'custom-dialog-backdrop-class',
+      panelClass: 'custom-dialog-panel-class',
+      data: {
+        response: this.response,
+        fields: this.fields
+       }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.dialogValue = result.data;
+    });
+  }
+
+  openDialogError(): void {
+    const dialogRef = this.dialog.open(LoanDialogComponent, {
+      disableClose: true,
+      backdropClass: 'custom-dialog-backdrop-class',
+      panelClass: 'custom-dialog-panel-class',
+      data: {
+        fields: this.fields
+       }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      this.dialogValue = result.data;
+    });
+  }
+
 }

@@ -1,6 +1,86 @@
 <div>
 
-    <form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+    <form class="form" [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+
+        <mat-form-field class="full-width">
+            <mat-label>Monthly Income</mat-label>
+            <input matInput type="number" placeholder="Enter amount in euro" formControlName="monthlyIncome">
+            <mat-icon matSuffix>euro_symbol</mat-icon>
+            <!--            <span *ngIf="loanForm.controls['monthlyIncome'].errors.pattern">
+                <mat-error>
+                    Only Numbers are allowed.  
+                </mat-error>
+            </span>
+            -->
+
+            <span *ngFor="let field of fields">
+                <span *ngIf="field.params === 'monthlyIncome'">
+                    <mat-error>
+                        {{field.message}}   
+                    </mat-error>
+                </span>
+            </span>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <mat-label>Requested Amount</mat-label>
+            <input matInput type="number" placeholder="Enter amount in euro" formControlName="requestedAmount">
+            <mat-icon matSuffix>euro_symbol</mat-icon>
+            <span *ngFor="let field of fields">
+                <span *ngIf="field.params === 'requestedAmount'">
+                    <mat-error>
+                        {{field.message}}   
+                    </mat-error>
+                </span>
+            </span>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <mat-label>Loan Term</mat-label>
+            <input matInput type="number" formControlName="loanTerm" placeholder="Enter number of months">
+            <mat-icon matSuffix>date_range</mat-icon>
+            <span *ngFor="let field of fields">
+                <span *ngIf="field.params === 'loanTerm'">
+                    <mat-error>
+                        {{field.message}}   
+                    </mat-error>
+                </span>
+            </span>
+        </mat-form-field>
+
+        <br />
+
+        <mat-form-field class="full-width">
+            <mat-label>Children</mat-label>
+            <mat-select formControlName="children" (change)="changeChildren($event)">
+                <mat-option value="NONE">NONE</mat-option>
+                <mat-option value="SINGLE">SINGLE</mat-option>
+                <mat-option value="MULTIPLE">MULTIPLE</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br />
+
+        <mat-form-field class="full-width">
+            <mat-label>CoApplicant</mat-label>
+            <mat-select formControlName="coapplicant" (change)="changeCOApplicant($event)">
+                <mat-option value="NONE">NONE</mat-option>
+                <mat-option value="SINGLE_BORROWER">SINGLE BORROWER</mat-option>
+                <mat-option value="MULTIPLE_BORROWERS">MULTIPLE BORROWERS</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <br />
+        <div class="btn-right">
+            <button mat-flat-button color="warn" [disabled]="!loanForm.valid" type="submit">Send</button>
+        </div>
+     
+
+    </form>
+
+    <!--
+    <form class="example-form" [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+
         <div class="form-group">
             <label>Montly Income *</label>
             <input class="form-control" type="number" formControlName="monthlyIncome"
@@ -65,12 +145,6 @@
         <button class="btn btn-danger btn-block" [disabled]="!loanForm.valid" type="submit">Submit</button>
     </form>
 
-
-    <div style="margin-top: 30px;" class="form-group" *ngIf="this.response && calculated">
-        <h2>Calculated Loan</h2>
-        <p>Response from backend</p>
-        <p>Your interest rate: {{response.interestRate}}</p>
-        <p>You can loan: {{response.loanAmount}}</p>
-    </div>
+    -->
 
 </div>

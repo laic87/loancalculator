@@ -1,22 +1,23 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoanFormComponent } from './loan-form/loan-form.component';
+import { MaterialModule } from './shared/material.module';
+import { LoanDialogComponent } from './loan-dialog/loan-dialog.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
-        FormsModule
+        MaterialModule
       ],
       declarations: [
         AppComponent,
-        LoanFormComponent
+        LoanFormComponent,
+        LoanDialogComponent,
       ],
     }).compileComponents();
   });
