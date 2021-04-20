@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_KEY: 'swb-222222'
+  API_KEY: 'Enter your API KEY here!'
 };
 
 /*
