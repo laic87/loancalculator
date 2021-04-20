@@ -5,8 +5,16 @@
 * Angular CLI 11.2
 * Angular Material 11.2.8
 * Karma 6.1.0
+* Proxy-server
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.0.
+
+## How to run
+Run `npm install` and not `ng serve` because it will run the proxy server, and add the API KEY inside of the environment file to make calls to the backend server.
+src/environments/environment
+
+## Environment variables
+Inside of environment.ts here is the path src/environments/environment add the API KEY so you have access to make calls to the backend server
 
 ## Development server
 
